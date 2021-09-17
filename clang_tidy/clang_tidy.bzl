@@ -44,6 +44,7 @@ def _run_tidy(ctx, exe, flags, compilation_context, infile, discriminator):
         arguments = [args],
         mnemonic = "ClangTidy",
         progress_message = "Run clang-tidy on {}".format(infile.short_path),
+        use_default_shell_env = True,
         execution_requirements = {
             # without "no-sandbox" flag the clang-tidy can not find a .clang-tidy file in the
             # closest parent, because the .clang-tidy file is placed in a "clang_tidy" shell
@@ -106,7 +107,7 @@ clang_tidy_aspect = aspect(
     fragments = ["cpp"],
     attrs = {
         "_cc_toolchain": attr.label(default = Label("@bazel_tools//tools/cpp:current_cc_toolchain")),
-        "_clang_tidy": attr.label(default = Label("//clang_tidy:clang_tidy")),
+        "_clang_tidy": attr.label(default = Label("//clang_tidy:clang_tidy.bat")),
     },
     toolchains = ["@bazel_tools//tools/cpp:toolchain_type"],
 )
